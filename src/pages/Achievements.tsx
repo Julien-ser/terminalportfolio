@@ -1,7 +1,33 @@
 import React from 'react';
-import achievementsData from '../data/achievements.json';
+import { usePortfolioStore } from '../store/usePortfolioStore';
 
 export const Achievements: React.FC = () => {
+  const { achievements, isLoading, error } = usePortfolioStore();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-red-400 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (achievements.length === 0) {
+    return (
+      <div className="min-h-screen bg-black text-yellow-400 flex items-center justify-center">
+        No achievements to display.
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-gray-300 p-6">
       <div className="max-w-4xl mx-auto">
@@ -11,7 +37,7 @@ export const Achievements: React.FC = () => {
         </header>
 
         <div className="space-y-4">
-          {achievementsData.map((achievement) => (
+          {achievements.map((achievement) => (
             <div
               key={achievement.id}
               className="bg-gray-900 border border-green-800 rounded-lg p-6 hover:border-green-600 transition-colors"

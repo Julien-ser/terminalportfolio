@@ -1,9 +1,35 @@
 import React from 'react';
-import personalData from '../data/personal.json';
-
-const { name, title, bio, avatar, resumeUrl, skills, languages, education, experience } = personalData;
+import { usePortfolioStore } from '../store/usePortfolioStore';
 
 export const About: React.FC = () => {
+  const { personal, isLoading, error } = usePortfolioStore();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-red-400 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!personal) {
+    return (
+      <div className="min-h-screen bg-black text-yellow-400 flex items-center justify-center">
+        No personal data available.
+      </div>
+    );
+  }
+
+  const { name, title, bio, avatar, resumeUrl, skills, languages, education, experience } = personal;
+
   return (
     <div className="min-h-screen bg-black text-gray-300 p-6">
       <div className="max-w-4xl mx-auto">

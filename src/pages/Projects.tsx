@@ -1,7 +1,33 @@
 import React from 'react';
-import projectsData from '../data/projects.json';
+import { usePortfolioStore } from '../store/usePortfolioStore';
 
 export const Projects: React.FC = () => {
+  const { projects, isLoading, error } = usePortfolioStore();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-red-400 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="min-h-screen bg-black text-yellow-400 flex items-center justify-center">
+        No projects to display.
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-gray-300 p-6">
       <div className="max-w-6xl mx-auto">
@@ -11,7 +37,7 @@ export const Projects: React.FC = () => {
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projectsData.map((project) => (
+          {projects.map((project) => (
             <div
               key={project.id}
               className="bg-gray-900 border border-green-800 rounded-lg overflow-hidden hover:border-green-600 transition-colors"

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import contactData from '../data/contact.json';
-
-const { email, phone, location, social, contactForm } = contactData;
+import { usePortfolioStore } from '../store/usePortfolioStore';
 
 export const Contact: React.FC = () => {
+  const { contact, isLoading, error } = usePortfolioStore();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +23,32 @@ export const Contact: React.FC = () => {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-red-400 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!contact) {
+    return (
+      <div className="min-h-screen bg-black text-yellow-400 flex items-center justify-center">
+        No contact data available.
+      </div>
+    );
+  }
+
+  const { email, phone, location, social, contactForm } = contact;
 
   return (
     <div className="min-h-screen bg-black text-gray-300 p-6">

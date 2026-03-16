@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTerminal } from '../hooks/useTerminal';
+import { usePortfolioStore } from '../store/usePortfolioStore';
+import { CommandHandler } from '../utils/commandParser';
 import { getAutoCompletions } from '../utils/commandParser';
 
 const PROMPT_CLASS = "text-blue-400";
@@ -7,13 +9,19 @@ const ERROR_CLASS = "text-red-400";
 const OUTPUT_CLASS = "text-gray-300";
 
 export const Terminal: React.FC = () => {
+  const terminal = useTerminal(100);
   const {
     commandHistory,
     input,
     setInput,
     handleKeyDown,
     availableCommands,
-  } = useTerminal(100);
+    registerCommand,
+    clearOutput
+  } = terminal;
+
+  // Ensure store is initialized
+  usePortfolioStore();
 
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -55,6 +63,116 @@ export const Terminal: React.FC = () => {
     setShowSuggestions(false);
     inputRef.current?.focus();
   };
+
+  // Register all commands
+  useEffect(() => {
+    const helpHandler: CommandHandler = async (_args, _options) => {
+      const commands = ['about', 'projects', 'achievements', 'contact', 'email', 'clear', 'exit', 'help'];
+      return 'Available commands:\n  ' + commands.join('\n  ');
+    };
+
+    const clearHandler: CommandHandler = async (_args, _options) => {
+      clearOutput();
+      return '';
+    };
+
+    const exitHandler: CommandHandler = async (_args, _options) => {
+      return 'To exit the terminal, navigate using the navbar or close the tab.';
+    };
+
+    const aboutHandler: CommandHandler = async (_args, _options) => {
+      const { personal, isLoading, error } = usePortfolioStore.getState();
+      if (isLoading) return 'Portfolio data is loading, please wait...';
+      if (error || !personal) return 'Personal data not available.';
+      let output = `\n=== About ${personal.name} ===\n\n`;
+      output += `${personal.title}\n\n`;
+      output += `Bio:\n${personal.bio}\n\n`;
+      output += `Skills:\n`;
+      Object.entries(personal.skills).forEach(([category, skillList]) => {
+        output += `  ${category}: ${skillList.map(s => s.name).join(', ')}\n`;
+      });
+      output += `\nExperience:\n`;
+      personal.experience.forEach(exp => {
+        output += `  ${exp.role} at ${exp.company} (${exp.duration})\n`;
+        exp.highlights.forEach(h => output += `    - ${h}\n`);
+      });
+      output += `\nEducation:\n`;
+      personal.education.forEach(edu => {
+        output += `  ${edu.degree} from ${edu.institution} (${edu.year})\n`;
+      });
+      output += `\nLanguages:\n`;
+      personal.languages.forEach(lang => {
+        output += `  ${lang.language} (${lang.level})\n`;
+      });
+      return output;
+    };
+
+    const projectsHandler: CommandHandler = async (_args, _options) => {
+      const { projects, isLoading, error } = usePortfolioStore.getState();
+      if (isLoading) return 'Portfolio data is loading, please wait...';
+      if (error || projects.length === 0) return 'No projects available.';
+      let output = '\n=== Projects ===\n\n';
+      projects.forEach(p => {
+        output += `${p.title} (${p.year})\n`;
+        output += `  ${p.shortDescription}\n`;
+        output += `  Technologies: ${p.technologies.join(', ')}\n`;
+        if (p.links.github) output += `  GitHub: ${p.links.github}\n`;
+        if (p.links.demo) output += `  Demo: ${p.links.demo}\n`;
+        if (p.links.documentation) output += `  Docs: ${p.links.documentation}\n`;
+        output += '\n';
+      });
+      return output;
+    };
+
+    const achievementsHandler: CommandHandler = async (_args, _options) => {
+      const { achievements, isLoading, error } = usePortfolioStore.getState();
+      if (isLoading) return 'Portfolio data is loading, please wait...';
+      if (error || achievements.length === 0) return 'No achievements available.';
+      let output = '\n=== Achievements ===\n\n';
+      achievements.forEach(a => {
+        output += `${a.title} - ${a.issuer} (${a.date})\n`;
+        output += `  ${a.description}\n`;
+        output += `  Type: ${a.type}\n`;
+        if (a.url) output += `  Verify: ${a.url}\n`;
+        output += '\n';
+      });
+      return output;
+    };
+
+    const contactHandler: CommandHandler = async (_args, _options) => {
+      const { contact, isLoading, error } = usePortfolioStore.getState();
+      if (isLoading) return 'Portfolio data is loading, please wait...';
+      if (error || !contact) return 'Contact data not available.';
+      let output = '\n=== Contact Information ===\n\n';
+      output += `Email: ${contact.email}\n`;
+      output += `Phone: ${contact.phone}\n`;
+      output += `Location: ${contact.location.city}, ${contact.location.state}, ${contact.location.country} (${contact.location.timezone})\n`;
+      output += `\nSocial Media:\n`;
+      Object.entries(contact.social).forEach(([platform, url]) => {
+        output += `  ${platform}: ${url}\n`;
+      });
+      return output;
+    };
+
+    const emailHandler: CommandHandler = async (_args, _options) => {
+      const { contact, isLoading, error } = usePortfolioStore.getState();
+      if (isLoading) return 'Portfolio data is loading, please wait...';
+      if (error || !contact) return 'Email not available.';
+      return `You can email me at: ${contact.email}`;
+    };
+
+    // Register commands
+    registerCommand('help', helpHandler);
+    registerCommand('clear', clearHandler);
+    registerCommand('exit', exitHandler);
+    registerCommand('about', aboutHandler);
+    registerCommand('projects', projectsHandler);
+    registerCommand('achievements', achievementsHandler);
+    registerCommand('contact', contactHandler);
+    registerCommand('email', emailHandler);
+
+    // 'chat' command will be implemented in Phase 3
+  }, [registerCommand, clearOutput]);
 
   const welcomeMessage = `Welcome to Terminal Portfolio v1.0.0
 Type 'help' to see available commands.
