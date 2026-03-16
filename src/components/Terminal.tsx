@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTerminal } from '../hooks/useTerminal';
 import { usePortfolioStore } from '../store/usePortfolioStore';
 import { CommandHandler } from '../utils/commandParser';
 import { getAutoCompletions } from '../utils/commandParser';
+import { ChatService } from '../services/chatService';
 
 const PROMPT_CLASS = "text-blue-400";
 const ERROR_CLASS = "text-red-400";
@@ -15,9 +16,14 @@ export const Terminal: React.FC = () => {
     input,
     setInput,
     handleKeyDown,
-    availableCommands,
+    clearOutput,
     registerCommand,
-    clearOutput
+    availableCommands,
+    mode,
+    setMode,
+    setChatInputHandler,
+    addEntry,
+    updateEntry,
   } = terminal;
 
   // Ensure store is initialized
@@ -28,6 +34,15 @@ export const Terminal: React.FC = () => {
   const [selectedSuggestion, setSelectedSuggestion] = useState(0);
   const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Ref to hold the current chat service instance
+  const chatServiceRef = useRef<ChatService | null>(null);
+
+  // Ref to always have the latest available commands for help
+  const commandsRef = useRef<string[]>([]);
+  useEffect(() => {
+    commandsRef.current = availableCommands;
+  });
 
   useEffect(() => {
     if (input.includes('--') || input.split(' ').length <= 2) {
@@ -64,11 +79,47 @@ export const Terminal: React.FC = () => {
     inputRef.current?.focus();
   };
 
+  // Chat input handler - called when in chat mode and user presses Enter
+  const handleChatInput = useCallback(async (userMessage: string) => {
+    const service = chatServiceRef.current;
+    if (!service) {
+      addEntry({ command: userMessage, output: 'Chat service not initialized. Please restart chat.', isError: true });
+      return;
+    }
+
+    // Add user message as a new entry
+    const entryId = addEntry({ command: userMessage, output: '' });
+
+    try {
+      let fullResponse = '';
+      await service.sendMessage(userMessage, (token) => {
+        fullResponse += token;
+        updateEntry(entryId, { output: fullResponse });
+      });
+    } catch (error) {
+      updateEntry(entryId, {
+        output: `Error: ${error instanceof Error ? error.message : String(error)}`,
+        isError: true
+      });
+    }
+  }, [addEntry, updateEntry]);
+
+  // Set the chat input handler so useTerminal can call it
+  useEffect(() => {
+    setChatInputHandler(handleChatInput);
+  }, [handleChatInput, setChatInputHandler]);
+
+  // Cleanup chat service when exiting chat mode
+  useEffect(() => {
+    if (mode !== 'chat') {
+      chatServiceRef.current = null;
+    }
+  }, [mode]);
+
   // Register all commands
   useEffect(() => {
-    const helpHandler: CommandHandler = async (_args, _options) => {
-      const commands = ['about', 'projects', 'achievements', 'contact', 'email', 'clear', 'exit', 'help'];
-      return 'Available commands:\n  ' + commands.join('\n  ');
+    const helpHandler: CommandHandler = async () => {
+      return 'Available commands:\n  ' + commandsRef.current.sort().join('\n  ');
     };
 
     const clearHandler: CommandHandler = async (_args, _options) => {
@@ -161,6 +212,14 @@ export const Terminal: React.FC = () => {
       return `You can email me at: ${contact.email}`;
     };
 
+    const chatHandler: CommandHandler = async (_args, _options) => {
+      // Initialize a new chat service instance
+      chatServiceRef.current = new ChatService();
+      // Switch to chat mode
+      setMode('chat');
+      return 'Chat mode activated. Type your questions; type "/exit" to leave.';
+    };
+
     // Register commands
     registerCommand('help', helpHandler);
     registerCommand('clear', clearHandler);
@@ -170,9 +229,8 @@ export const Terminal: React.FC = () => {
     registerCommand('achievements', achievementsHandler);
     registerCommand('contact', contactHandler);
     registerCommand('email', emailHandler);
-
-    // 'chat' command will be implemented in Phase 3
-  }, [registerCommand, clearOutput]);
+    registerCommand('chat', chatHandler);
+  }, [registerCommand, clearOutput, setMode, addEntry, updateEntry]);
 
   const welcomeMessage = `Welcome to Terminal Portfolio v1.0.0
 Type 'help' to see available commands.

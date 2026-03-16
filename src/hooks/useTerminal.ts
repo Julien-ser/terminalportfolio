@@ -17,6 +17,13 @@ interface UseTerminalReturn {
   maxHistory: number;
   registerCommand: (name: string, handler: CommandHandler) => void;
   availableCommands: string[];
+  // New additions for chat mode
+  mode: 'command' | 'chat';
+  setMode: (mode: 'command' | 'chat') => void;
+  chatInputHandler: ((input: string) => Promise<void>) | null;
+  setChatInputHandler: (handler: (input: string) => Promise<void>) => void;
+  addEntry: (entry: Omit<CommandEntry, 'id'>) => number;
+  updateEntry: (id: number, updates: Partial<CommandEntry>) => void;
 }
 
 export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
@@ -27,6 +34,10 @@ export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
   const inputRef = useRef<HTMLInputElement>(null);
   const commandCounter = useRef(0);
 
+  // Chat mode state
+  const [mode, setMode] = useState<'command' | 'chat'>('command');
+  const [chatInputHandler, setChatInputHandler] = useState<((input: string) => Promise<void>) | null>(null);
+
   const registerCommand = useCallback((name: string, handler: CommandHandler) => {
     setCommandRegistry(prev => new Map(prev.set(name, handler)));
   }, []);
@@ -35,6 +46,21 @@ export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
 
   const clearOutput = useCallback(() => {
     setCommandHistory([]);
+  }, []);
+
+  const addEntry = useCallback((entry: Omit<CommandEntry, 'id'>): number => {
+    const newId = commandCounter.current++;
+    setCommandHistory(prev => {
+      const next = [...prev, { ...entry, id: newId }];
+      return next.slice(-maxHistory);
+    });
+    return newId;
+  }, [maxHistory]);
+
+  const updateEntry = useCallback((id: number, updates: Partial<CommandEntry>) => {
+    setCommandHistory(prev => prev.map(entry => 
+      entry.id === id ? { ...entry, ...updates } : entry
+    ));
   }, []);
 
   const executeCommand = useCallback(async (rawInput: string): Promise<string> => {
@@ -58,41 +84,7 @@ export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
   }, [commandRegistry, availableCommands]);
 
   const handleKeyDown = useCallback(async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      
-      const rawInput = input.trim();
-      if (!rawInput) {
-        setInput('');
-        return;
-      }
-
-      setCommandHistory(prev => {
-        const newEntry: CommandEntry = {
-          id: commandCounter.current++,
-          command: rawInput,
-          output: 'Processing...',
-        };
-        return [...prev, newEntry];
-      });
-
-      const output = await executeCommand(rawInput);
-      
-      setCommandHistory(prev => {
-        const updated = [...prev];
-        const last = updated[updated.length - 1];
-        if (last) {
-          last.output = output;
-          last.isError = output.toLowerCase().includes('error') || 
-                         output.toLowerCase().includes('not found') ||
-                         output.toLowerCase().includes('invalid');
-        }
-        return updated.slice(-maxHistory);
-      });
-
-      setInput('');
-      setHistoryIndex(-1);
-    } else if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length > 0) {
         const newIndex = historyIndex === -1 
@@ -113,8 +105,57 @@ export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
           setInput(commandHistory[newIndex + 1]?.command || '');
         }
       }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const rawInput = input.trim();
+      if (!rawInput) {
+        setInput('');
+        return;
+      }
+
+      // Chat mode handling
+      if (mode === 'chat') {
+        if (rawInput === '/exit' || rawInput === '/quit') {
+          setMode('command');
+          setChatInputHandler(null);
+          addEntry({ command: rawInput, output: 'Exited chat mode.' });
+          setInput('');
+          return;
+        }
+
+        if (chatInputHandler) {
+          await chatInputHandler(rawInput);
+        } else {
+          addEntry({ command: rawInput, output: 'Error: Chat handler not initialized.', isError: true });
+        }
+        setInput('');
+        return;
+      }
+
+      // Command mode handling
+      const entryId = addEntry({ command: rawInput, output: 'Processing...' });
+      setInput('');
+      setHistoryIndex(-1);
+
+      const output = await executeCommand(rawInput);
+      
+      const isError = output.toLowerCase().includes('error') || 
+                      output.toLowerCase().includes('not found') ||
+                      output.toLowerCase().includes('invalid');
+      updateEntry(entryId, { output, isError });
     }
-  }, [input, commandHistory, historyIndex, executeCommand, maxHistory]);
+  }, [
+    input, 
+    commandHistory, 
+    historyIndex, 
+    executeCommand, 
+    maxHistory,
+    mode,
+    chatInputHandler,
+    setMode,
+    addEntry,
+    updateEntry
+  ]);
 
   useEffect(() => {
     const handleFocus = () => {
@@ -133,5 +174,11 @@ export function useTerminal(maxHistory: number = 100): UseTerminalReturn {
     maxHistory,
     registerCommand,
     availableCommands,
+    mode,
+    setMode,
+    chatInputHandler,
+    setChatInputHandler,
+    addEntry,
+    updateEntry,
   };
 }

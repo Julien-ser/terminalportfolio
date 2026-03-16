@@ -103,7 +103,7 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Integrated store into all pages and terminal
   - Added loading states and error handling throughout
 
-### Phase 3: RAG Implementation (In Progress)
+### Phase 3: RAG Implementation ✓
 - **Task 1**: LLM service integration ✓
   - Created `src/services/llmService.ts` with `streamChat()` function
   - Supports GPT-4-turbo and GPT-3.5-turbo models
@@ -119,7 +119,12 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Created `src/services/vectorService.ts` with `search(query, topK)` function
   - Created `scripts/create-index.js` to upload embeddings to Pinecone
   - Added Pinecone configuration to `.env.example`
-- **Task 4**: RAG chatbot in terminal (Next)
+- **Task 4**: RAG chatbot in terminal ✓
+  - Created `src/services/chatService.ts` with `ChatService` class
+  - Implemented multi-turn conversation with context retrieval and streaming
+  - Integrated chat mode into terminal (`chat` command)
+  - Added support for `/exit` to leave chat mode
+  - Handles token limits via history pruning (last 3 exchanges)
 
 ### Phase 4: UI/UX Polish & Deployment (Pending)
 
@@ -140,11 +145,16 @@ The terminal interface is the heart of the portfolio, providing an interactive c
 - `src/hooks/useTerminal.ts` - State management and command execution logic
 - `src/utils/commandParser.ts` - Command parsing, validation, and auto-completion utilities
 
-### Supported Commands (Core)
+### Supported Commands
 - `help` - Display available commands
 - `clear` - Clear terminal screen
 - `exit` - Exit terminal session
-- More commands (about, projects, achievements, contact, email, chat) to be implemented in subsequent tasks
+- `about` - Show personal information (bio, skills, experience, education, languages)
+- `projects` - List all portfolio projects with descriptions and links
+- `achievements` - Show achievements and certifications
+- `contact` - Display contact information (email, phone, location, social media)
+- `email` - Show email address directly
+- `chat` - Start interactive RAG-powered chat mode (type `/exit` to leave)
 
 ### Usage
 The terminal is rendered on the homepage (`/`). Simply start typing commands and press Enter. Use Tab for suggestions and arrow keys to navigate command history.
