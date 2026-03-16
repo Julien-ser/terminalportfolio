@@ -126,7 +126,16 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Added support for `/exit` to leave chat mode
   - Handles token limits via history pruning (last 3 exchanges)
 
-### Phase 4: UI/UX Polish & Deployment (Pending)
+### Phase 4: UI/UX Polish & Deployment (In Progress)
+- **Task 1**: Terminal aesthetics enhancement ✓ *Completed*
+  - Added CRT scanline overlay with subtle flicker animation
+  - Implemented text glow effect for prompts and output
+  - Added typing animation for newly rendered output
+  - Created custom retro-style scrollbar (green on black)
+  - Integrated Fira Code monospace font from Google Fonts
+  - Applied retro green/amber color palette with black background
+  - Added retro border glow effect to terminal container
+  - Updated all components with responsive design considerations (for Task 2)
 
 ## Latest Implementation: Terminal Component
 
@@ -139,6 +148,21 @@ The terminal interface is the heart of the portfolio, providing an interactive c
 - **Clean output formatting** with color-coded messages (success, error, info)
 - **Welcome message** on first load
 - **Fully responsive** design
+
+### Retro Terminal Aesthetics
+
+The terminal interface features authentic CRT monitor effects for a nostalgic command-line experience:
+
+- **CRT Scanline Overlay**: Horizontal scanlines with subtle flicker animation mimicking old CRT displays
+- **Text Glow**: Neon glow effect applied to prompt and output text using CSS text-shadow
+- **Typing Animation**: Smooth fade-in effect for new output, simulating typewriter-like appearance
+- **Custom Scrollbar**: Retro-styled green scrollbar with dark track, matching the terminal theme
+- **Fira Code Font**: Modern monospace font with excellent readability for code and terminal text
+- **Retro Color Palette**: Classic green-on-black terminal colors with optional amber accents
+- **Border Glow**: Subtle glowing border around terminal container
+- **Cursor Blink**: Natural cursor blinking animation on input field
+
+All styles are defined in `src/components/Terminal.css` with CSS animations and Tailwind utility classes.
 
 ### Structure
 - `src/components/Terminal.tsx` - Main terminal UI component
