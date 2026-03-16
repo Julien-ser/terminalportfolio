@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { parseCommand, validateCommand, getAutoCompletions, CommandHandler } from '../utils/commandParser';
+import { parseCommand, validateCommand, CommandHandler } from '../utils/commandParser';
 
 interface CommandEntry {
   id: number;

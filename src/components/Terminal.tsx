@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTerminal } from '../hooks/useTerminal';
 import { getAutoCompletions } from '../utils/commandParser';
 
-const SUGGESTION_CLASS = "text-gray-400";
-const COMMAND_CLASS = "text-green-400 font-bold";
 const PROMPT_CLASS = "text-blue-400";
 const ERROR_CLASS = "text-red-400";
 const OUTPUT_CLASS = "text-gray-300";
@@ -14,7 +12,6 @@ export const Terminal: React.FC = () => {
     input,
     setInput,
     handleKeyDown,
-    clearOutput,
     availableCommands,
   } = useTerminal(100);
 

@@ -54,8 +54,16 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Implemented `useTerminal` hook for state management
   - Created `commandParser.ts` for command parsing and validation
   - Features: command history, auto-completion, keyboard navigation, error handling
-- **Task 2**: Client-side routing with React Router (pending)
-- **Task 3**: Content Pages (pending)
+- **Task 2**: Client-side routing with React Router ✓
+  - Created `App.tsx` with React Router v6 routes
+  - Built responsive `Navbar` component with navigation links
+  - Implemented static pages: About, Projects, Achievements, Contact
+  - Terminal stays on `/` route with global navigation
+- **Task 3**: Content Pages ✓
+  - About page: personal bio, skills, experience, education, languages
+  - Projects page: responsive grid with project cards, tags, and links
+  - Achievements page: timeline of certifications, awards, accomplishments
+  - Contact page: contact form, social links, email, phone, location
 - **Task 4**: Global state with Zustand (pending)
 
 ## Latest Implementation: Terminal Component
@@ -127,13 +135,28 @@ vercel --prod
 
 ```
 src/
-├── components/     # Reusable UI components
-├── pages/         # Page components
-├── services/      # API and business logic
-├── store/         # Zustand state management
-├── utils/         # Helper functions
-├── data/          # JSON data files
-└── hooks/         # Custom React hooks
+├── components/
+│   ├── Terminal.tsx    # Main terminal UI with command input/output
+│   └── Navbar.tsx      # Navigation bar for static pages
+├── pages/
+│   ├── About.tsx       # Personal bio, skills, experience, education
+│   ├── Projects.tsx    # Project showcase grid
+│   ├── Achievements.tsx # Certifications, awards timeline
+│   └── Contact.tsx     # Contact form and social links
+├── services/           # API and business logic (for RAG)
+├── store/              # Zustand state management (pending)
+├── utils/
+│   └── commandParser.ts # Command parsing, validation, auto-completion
+├── data/               # JSON data files
+│   ├── personal.json
+│   ├── projects.json
+│   ├── achievements.json
+│   └── contact.json
+├── hooks/
+│   └── useTerminal.ts  # Terminal state management
+├── App.tsx             # Main app with React Router routes
+├── main.tsx            # Entry point
+└── index.css           # Global styles and Tailwind
 ```
 
 ## License

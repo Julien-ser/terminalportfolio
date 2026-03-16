@@ -187,3 +187,59 @@ Index: /home/julien/Desktop/Free-Wiggum-opencode/projects/terminalportfolio/TASK
 
 [0m
 Now I'll mark Task 2 as completed in TASKS.md and commit the changes:
+[0m$ [0mgit add . && git commit -m "feat: add portfolio data models and sample content" && git push origin main
+[main 0fb4bd0] feat: add portfolio data models and sample content
+ 8 files changed, 838 insertions(+), 1 deletion(-)
+ create mode 100644 logs/iteration-3.md
+ create mode 100644 src/data/achievements.json
+ create mode 100644 src/data/contact.json
+ create mode 100644 src/data/personal.json
+ create mode 100644 src/data/projects.json
+To https://github.com/Julien-ser/terminalportfolio.git
+   075578c..0fb4bd0  main -> main
+[0m
+Perfect! Task 2 completed successfully. Here's what was delivered:
+
+**Data Models Created:**
+
+1. `src/data/projects.json` - 5 portfolio projects with full metadata (technologies, links, tags, featured status)
+2. `src/data/achievements.json` - 5 achievements (certifications, awards, accomplishments) with issuers, dates, and icons
+3. `src/data/contact.json` - Contact information including email, phone, location, and social media links
+4. `src/data/personal.json` - Complete profile with skills (categorized by frontend/backend/devops/tools), languages, education, and work experience
+
+All files contain realistic dummy content representing a senior full-stack developer with 8+ years of experience. Changes have been committed and pushed to GitHub.
+📝 Log saved: logs/iteration-3.md
+📊 Token Usage: 6250 / Session: 18250 / 64000
+⚠️  CONTEXT LENGTH ERROR - skipping to next iteration
+📍 Iteration 4 at Mon Mar 16 11:28:56 AM EDT 2026...
+🤖 OpenCode processing: **Task 3:** Create wireframes for terminal interface and all static pages (About, Projects, Achievements, Contact). Define terminal command set (e.g., `help`, `about`, `projects`, `achievements`, `contact`, `email`, `chat`, `clear`, `exit`). Document command syntax and help text. *Deliverable:* Wireframes (Figma/draw.io) and `docs/commands.md`.
+[0m
+> build · stepfun/step-3.5-flash:free
+[0m
+I'll complete Task 3: Create wireframes and document terminal commands. Let me start by checking the current project structure.
+[0m$ [0mls -la
+total 72
+drwxr-xr-x  6 julien julien 4096 Mar 16 11:27 .
+drwxr-xr-x 23 julien julien 4096 Mar 16 11:22 ..
+-rw-r--r--  1 julien julien    8 Mar 16 11:23 .agent_role
+drwxr-xr-x  7 julien julien 4096 Mar 16 11:28 .git
+drwxr-xr-x  3 julien julien 4096 Mar 16 11:22 .github
+-rw-r--r--  1 julien julien  371 Mar 16 11:25 .gitignore
+drwxr-xr-x  2 julien julien 4096 Mar 16 11:28 logs
+-rw-r--r--  1 julien julien  921 Mar 16 11:25 package.json
+-rw-r--r--  1 julien julien 9218 Mar 16 11:22 prompt.txt
+-rw-r--r--  1 julien julien 1731 Mar 16 11:25 README.md
+drwxr-xr-x  3 julien julien 4096 Mar 16 11:27 src
+-rw-r--r--  1 julien julien 5113 Mar 16 11:28 TASKS.md
+-rw-r--r--  1 julien julien 5113 Mar 16 11:23 TASKS_original.md
+-rw-r--r--  1 julien julien    6 Mar 16 11:23 .worker_persistent_mode
+[0m
+[0m→ [0mRead README.md
+[0m→ [0mRead TASKS.md
+[0m
+[0m$ [0mmkdir -p docs
+Now I'll create the documentation for Task 3. First, I'll create the `docs` directory and the command reference file:
+[0m
+[0m← [0mWrite docs/commands.md
+Wrote file successfully.
+[0m
