@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "AI Code Assistant",
+    "description": "A VS Code extension that provides intelligent code completions and refactoring suggestions using GPT-4. Features include natural language to code translation, automated documentation generation, and code smell detection.",
+    "shortDescription": "AI-powered VS Code extension for smarter coding",
+    "technologies": ["TypeScript", "React", "Node.js", "OpenAI API", "VS Code Extension API"],
+    "links": {
+      "github": "https://github.com/example/ai-code-assistant",
+      "demo": "https://marketplace.visualstudio.com/items?itemName=ai-code-assistant",
+      "documentation": "https://ai-code-assistant.dev/docs"
+    },
+    "image": "/images/projects/ai-assistant.png",
+    "tags": ["AI/ML", "Developer Tools", "VS Code", "TypeScript"],
+    "featured": true,
+    "year": "2024"
+  },
+  {
+    "id": 2,
+    "title": "Real-Time Collaboration Platform",
+    "description": "A full-stack web application enabling real-time document collaboration similar to Google Docs. Uses WebSockets for live updates, operational transformation for conflict resolution, and role-based access control.",
+    "shortDescription": "Google Docs alternative with live collaboration",
+    "technologies": ["React", "Node.js", "Socket.io", "MongoDB", "Redis", "Docker"],
+    "links": {
+      "github": "https://github.com/example/collab-platform",
+      "demo": "https://collab.example.com",
+      "documentation": "https://collab.example.com/docs"
+    },
+    "image": "/images/projects/collab-platform.png",
+    "tags": ["Real-time", "WebSockets", "Full-stack", "React"],
+    "featured": true,
+    "year": "2023"
+  },
+  {
+    "id": 3,
+    "title": "API Performance Monitor",
+    "description": "A comprehensive monitoring solution for REST and GraphQL APIs. Tracks response times, error rates, and provides automated alerts with root cause analysis. Includes a dashboard with real-time metrics and historical trends.",
+    "shortDescription": "API monitoring and analytics platform",
+    "technologies": ["Python", "FastAPI", "PostgreSQL", "Grafana", "Kubernetes", "Prometheus"],
+    "links": {
+      "github": "https://github.com/example/api-monitor",
+      "demo": "https://monitor.example.com",
+      "documentation": "https://api-monitor.readthedocs.io"
+    },
+    "image": "/images/projects/api-monitor.png",
+    "tags": ["Monitoring", "DevOps", "Backend", "Python"],
+    "featured": false,
+    "year": "2023"
+  },
+  {
+    "id": 4,
+    "title": "E-Commerce Mobile App",
+    "description": "A cross-platform e-commerce mobile application built with React Native. Features include product catalog, shopping cart, secure payments via Stripe, push notifications, and order tracking.",
+    "shortDescription": "Cross-platform shopping app with Stripe integration",
+    "technologies": ["React Native", "TypeScript", "Redux", "Firebase", "Stripe"],
+    "links": {
+      "github": "https://github.com/example/ecommerce-app",
+      "demo": "https://apps.apple.com/app/example-store",
+      "documentation": "https://example-store.dev/guide"
+    },
+    "image": "/images/projects/ecommerce-app.png",
+    "tags": ["Mobile", "React Native", "E-commerce", "Firebase"],
+    "featured": false,
+    "year": "2022"
+  },
+  {
+    "id": 5,
+    "title": "Machine Learning Pipeline",
+    "description": "An end-to-end ML pipeline for automated model training and deployment. Handles data preprocessing, model selection, hyperparameter tuning, and provides REST API endpoints for inference. Achieved 95% accuracy on test datasets.",
+    "shortDescription": "Automated ML training and deployment pipeline",
+    "technologies": ["Python", "TensorFlow", "Kubeflow", "Airflow", "FastAPI", "AWS"],
+    "links": {
+      "github": "https://github.com/example/ml-pipeline",
+      "demo": "https://ml-api.example.com",
+      "documentation": "https://ml-pipeline.readthedocs.io"
+    },
+    "image": "/images/projects/ml-pipeline.png",
+    "tags": ["Machine Learning", "Python", "DevOps", "AWS"],
+    "featured": true,
+    "year": "2024"
+  }
+]

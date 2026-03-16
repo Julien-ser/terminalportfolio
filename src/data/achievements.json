@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "AWS Certified Solutions Architect - Professional",
+    "description": "Advanced certification demonstrating expertise in designing distributed systems on AWS, including cost optimization, high availability, and security best practices.",
+    "date": "03/2024",
+    "issuer": "Amazon Web Services",
+    "type": "certification",
+    "url": "https://www.credential.net/aws-solutions-architect-professional",
+    "icon": "🏆"
+  },
+  {
+    "id": 2,
+    "title": "First Place - Regional Hackathon",
+    "description": "Led a team of 4 to develop an AI-powered accessibility tool in 48 hours. Project won first place out of 50+ competing teams for its innovative approach to helping visually impaired users navigate websites.",
+    "date": "11/2023",
+    "issuer": "TechCrunch Disrupt",
+    "type": "award",
+    "url": "https://techcrunch.com/events/disrupt-2023",
+    "icon": "🥇"
+  },
+  {
+    "id": 3,
+    "title": "Google Cloud Professional Data Engineer",
+    "description": "Validated skills in designing, building, and maintaining data processing systems on GCP, including data pipelines, machine learning models, and big data solutions.",
+    "date": "08/2023",
+    "issuer": "Google Cloud",
+    "type": "certification",
+    "url": "https://www.credential.net/google-data-engineer",
+    "icon": "📊"
+  },
+  {
+    "id": 4,
+    "title": "Open Source Contributor of the Month",
+    "description": "Recognized by the React community for significant contributions to the React Router project, including performance improvements and accessibility features merged into the core library.",
+    "date": "06/2023",
+    "issuer": "React Community",
+    "type": "accomplishment",
+    "url": "https://github.com/react-router/react-router",
+    "icon": "🌟"
+  },
+  {
+    "id": 5,
+    "title": "MongoDB Certified Developer Associate",
+    "description": "Certified proficiency in MongoDB development including CRUD operations, indexing strategies, aggregation pipelines, and performance optimization.",
+    "date": "01/2023",
+    "issuer": "MongoDB University",
+    "type": "certification",
+    "url": "https://www.mongodb.com/certification",
+    "icon": "🗄️"
+  }
+]

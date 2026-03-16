@@ -1,0 +1,82 @@
+{
+  "name": "John Doe",
+  "title": "Senior Full-Stack Developer",
+  "bio": "Passionate full-stack developer with 8+ years of experience building scalable web applications and leading engineering teams. Specialized in React, Node.js, and cloud architecture. Open source enthusiast and tech blogger. When not coding, you'll find me hiking or experimenting with new AI tools.",
+  "avatar": "/images/avatar.jpg",
+  "resumeUrl": "/resume.pdf",
+  "skills": {
+    "frontend": [
+      { "name": "React", "proficiency": "Expert" },
+      { "name": "TypeScript", "proficiency": "Expert" },
+      { "name": "Vue.js", "proficiency": "Advanced" },
+      { "name": "Tailwind CSS", "proficiency": "Expert" },
+      { "name": "HTML/CSS", "proficiency": "Expert" }
+    ],
+    "backend": [
+      { "name": "Node.js", "proficiency": "Expert" },
+      { "name": "Python", "proficiency": "Advanced" },
+      { "name": "Go", "proficiency": "Intermediate" },
+      { "name": "PostgreSQL", "proficiency": "Advanced" },
+      { "name": "MongoDB", "proficiency": "Advanced" }
+    ],
+    "devops": [
+      { "name": "Docker", "proficiency": "Advanced" },
+      { "name": "Kubernetes", "proficiency": "Intermediate" },
+      { "name": "AWS", "proficiency": "Advanced" },
+      { "name": "CI/CD", "proficiency": "Advanced" },
+      { "name": "Terraform", "proficiency": "Intermediate" }
+    ],
+    "tools": [
+      { "name": "Git", "proficiency": "Expert" },
+      { "name": "VS Code", "proficiency": "Expert" },
+      { "name": "Figma", "proficiency": "Intermediate" },
+      { "name": "Vercel", "proficiency": "Advanced" },
+      { "name": "Jest", "proficiency": "Advanced" }
+    ]
+  },
+  "languages": [
+    { "language": "English", "level": "Native" },
+    { "language": "Spanish", "level": "Professional" },
+    { "language": "French", "level": "Intermediate" }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "University of California, Berkeley",
+      "year": "2016",
+      "highlights": ["Graduated with Honors", "Dean's List - 6 semesters"]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Tech Innovators Inc.",
+      "duration": "2021 - Present",
+      "highlights": [
+        "Led development of company's flagship SaaS product serving 100K+ users",
+        "Mentored team of 5 junior developers",
+        "Reduced deployment time by 60% through CI/CD improvements"
+      ]
+    },
+    {
+      "role": "Full-Stack Developer",
+      "company": "StartUp Labs",
+      "duration": "2018 - 2021",
+      "highlights": [
+        "Built real-time collaboration features using WebSockets",
+        "Designed and implemented REST APIs serving 1M+ requests daily",
+        "Introduced automated testing practices increasing coverage from 40% to 85%"
+      ]
+    },
+    {
+      "role": "Frontend Developer",
+      "company": "Digital Agency X",
+      "duration": "2016 - 2018",
+      "highlights": [
+        "Developed responsive websites for Fortune 500 clients",
+        "Optimized page load speeds by average of 40%",
+        "Created reusable component library used across 50+ projects"
+      ]
+    }
+  ]
+}

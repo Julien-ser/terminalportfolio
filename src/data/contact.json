@@ -1,0 +1,21 @@
+{
+  "email": "hello@johndoe.dev",
+  "phone": "+1 (555) 123-4567",
+  "location": {
+    "city": "San Francisco",
+    "state": "California",
+    "country": "United States",
+    "timezone": "PST"
+  },
+  "social": {
+    "github": "https://github.com/johndoe",
+    "linkedin": "https://linkedin.com/in/johndoe",
+    "twitter": "https://twitter.com/johndoe",
+    "devto": "https://dev.to/johndoe"
+  },
+  "contactForm": {
+    "enabled": true,
+    "emailRecipient": "contact@johndoe.dev",
+    "fields": ["name", "email", "subject", "message"]
+  }
+}
