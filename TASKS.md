@@ -4,7 +4,7 @@
 ## Phase 1: Planning & Setup
 - [x] **Task 1:** Choose tech stack (React/Vite + TypeScript + Tailwind CSS + React Router + Vercel), justify choices in README. Install Node.js v18+, create repository, and commit initial scaffold. *Deliverable:* `package.json` with dependencies, `.gitignore`, `README.md` with stack rationale.
 - [x] **Task 2:** Design data model for portfolio: define JSON schemas for `projects`, `achievements`, `contact`, and `personal_info`. Create sample data files under `src/data/`. *Deliverable:* `src/data/projects.json`, `achievements.json`, `contact.json`, `personal.json` with realistic dummy content.
-- [ ] **Task 3:** Create wireframes for terminal interface and all static pages (About, Projects, Achievements, Contact). Define terminal command set (e.g., `help`, `about`, `projects`, `achievements`, `contact`, `email`, `chat`, `clear`, `exit`). Document command syntax and help text. *Deliverable:* Wireframes (Figma/draw.io) and `docs/commands.md`.
+- [x] **Task 3:** Create wireframes for terminal interface and all static pages (About, Projects, Achievements, Contact). Define terminal command set (e.g., `help`, `about`, `projects`, `achievements`, `contact`, `email`, `chat`, `clear`, `exit`). Document command syntax and help text. *Deliverable:* Wireframes (Figma/draw.io) and `docs/commands.md`.
 - [ ] **Task 4:** Configure CI/CD pipeline using GitHub Actions to build and deploy preview on push to `main`. Set up Vercel project and link repository. *Deliverable:* `.github/workflows/vercel-deploy.yml`, Vercel project live URL.
 
 ## Phase 2: Core Infrastructure
