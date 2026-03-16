@@ -30,11 +30,14 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
      ```bash
      cp .env.example .env.local
      ```
-   - Edit `.env.local` and add your OpenAI API key:
+   - Edit `.env.local` and add your API keys:
      ```
      VITE_OPENAI_API_KEY=sk-your-actual-openai-api-key-here
+     PINECONE_API_KEY=your-pinecone-api-key-here
+     PINECONE_INDEX_NAME=terminalportfolio
      ```
-   - **Note:** The OpenAI API key is required for the RAG chatbot and document ingestion. Get one at [platform.openai.com](https://platform.openai.com).
+   - **Note:** The OpenAI API key is required for the RAG chatbot. Get one at [platform.openai.com](https://platform.openai.com).
+   - **Pinecone Setup:** Create a free account at [pinecone.io](https://pinecone.io), create an index, and get your API key. The index will be created automatically when you run `npm run create-index`.
 
 3. **Generate embeddings for RAG (one-time or when content changes):**
    ```bash
@@ -42,25 +45,34 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
    ```
    This processes the markdown documents in `src/data/docs/`, chunks them, generates embeddings using OpenAI's `text-embedding-ada-002`, and creates `src/data/embeddings.json`. The embeddings are used by the chatbot to answer questions based on your portfolio content.
 
-4. **Start development server:**
+4. **Create Pinecone vector index and upload embeddings:**
+   ```bash
+   npm run create-index
+   ```
+   This script reads `src/data/embeddings.json` and uploads the vectors to Pinecone. It will create the index if it doesn't exist and output the `VITE_PINECONE_INDEX_HOST` value. Add this host to your `.env.local` file as shown in the on-screen instructions.
+
+5. **Start development server:**
    ```bash
    npm run dev
    ```
 
-5. **Build for production:**
+6. **Build for production:**
    ```bash
    npm run build
    ```
 
-6. **Preview production build:**
+7. **Preview production build:**
    ```bash
    npm run preview
    ```
 
-7. **Production Environment Variables:**
-   - For Vercel deployment, set `VITE_OPENAI_API_KEY` in Vercel project settings (Environment Variables section).
+8. **Production Environment Variables:**
+   - For Vercel deployment, set the following in Vercel project settings (Environment Variables section):
+     - `VITE_OPENAI_API_KEY`
+     - `VITE_PINECONE_INDEX_HOST`
+     - `PINECONE_API_KEY` (only needed if you run `create-index` in CI)
    - GitHub Actions will automatically use these during build.
-   - **Important:** The ingest step (`npm run ingest`) should be run locally before committing the `embeddings.json` file, or you can add it as a pre-build step in CI/CD.
+   - **Important:** The ingest step (`npm run ingest`) and `npm run create-index` should be run locally before committing the `embeddings.json` file, or you can add them as pre-build steps in CI/CD.
 
 ## Current Progress
 
@@ -76,7 +88,7 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Implemented `useTerminal` hook for state management
   - Created `commandParser.ts` for command parsing and validation
   - Features: command history, auto-completion, keyboard navigation, error handling
-- **Task 2**: Client-side routing with React Router ✓
+- **Task 2**: Client-side routing with React Router v6 ✓
   - Created `App.tsx` with React Router v6 routes
   - Built responsive `Navbar` component with navigation links
   - Implemented static pages: About, Projects, Achievements, Contact
@@ -85,13 +97,11 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - About page: personal bio, skills, experience, education, languages
   - Projects page: responsive grid with project cards, tags, and links
   - Achievements page: timeline of certifications, awards, accomplishments
-  - Contact page: contact form, social links, email, phone, location
+  - Contact page: contact form and social links
 - **Task 4**: Global state with Zustand ✓
   - Created `usePortfolioStore.ts` with TypeScript interfaces and Zustand
-  - Integrated store into all pages (About, Projects, Achievements, Contact)
-  - Terminal component accesses store data for commands
+  - Integrated store into all pages and terminal
   - Added loading states and error handling throughout
-  - Store initialized on app mount with `fetchData()` function
 
 ### Phase 3: RAG Implementation (In Progress)
 - **Task 1**: LLM service integration ✓
@@ -99,14 +109,17 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Supports GPT-4-turbo and GPT-3.5-turbo models
   - Streaming response handler with callbacks for real-time output
   - Environment variable management via `.env.local` with `VITE_OPENAI_API_KEY`
-  - Includes fallback non-streaming `chat()` function
 - **Task 2**: Document ingestion pipeline ✓
-   - Created `src/data/docs/` with markdown versions of portfolio content (about.md, projects.md, achievements.md, contact.md)
-   - Implemented `embeddingService.ts` with chunking and embedding functions
-   - Created `scripts/ingest.js` that generates `embeddings.json`
-   - Added `npm run ingest` script and updated README
-- **Task 3**: Vector database setup (Pending)
-- **Task 4**: RAG chatbot in terminal (Pending)
+  - Created `src/data/docs/` with markdown versions of portfolio content
+  - Implemented `embeddingService.ts` with chunking and embedding functions
+  - Created `scripts/ingest.js` that generates `embeddings.json`
+  - Added `npm run ingest` script and updated README
+- **Task 3**: Vector database setup ✓
+  - Integrated Pinecone as cloud vector database
+  - Created `src/services/vectorService.ts` with `search(query, topK)` function
+  - Created `scripts/create-index.js` to upload embeddings to Pinecone
+  - Added Pinecone configuration to `.env.example`
+- **Task 4**: RAG chatbot in terminal (Next)
 
 ### Phase 4: UI/UX Polish & Deployment (Pending)
 
@@ -166,15 +179,6 @@ npm run build
 vercel --prod
 ```
 
-### Task 3 Deliverables Completed
-
-- Command specification: `docs/commands.md` - Complete reference for all terminal commands
-- Wireframes: `docs/wireframes.md` - Detailed UI/UX design for terminal and static pages
-- Command set defined: `help`, `about`, `projects`, `achievements`, `contact`, `email`, `chat`, `clear`, `exit`
-- Terminal interface designed with CRT effects, color themes, and input/output states
-- Static page wireframes for About, Projects, Achievements, Contact
-- Responsive breakpoints and accessibility considerations documented
-
 ## Project Structure
 
 ```
@@ -188,6 +192,9 @@ src/
 │   ├── Achievements.tsx # Certifications, awards timeline
 │   └── Contact.tsx     # Contact form and social links
 ├── services/           # API and business logic (for RAG)
+│   ├── llmService.ts   # OpenAI streaming chat
+│   ├── embeddingService.ts # Chunking and embedding generation
+│   └── vectorService.ts  # Pinecone vector search
 ├── store/              # Zustand state management
 ├── utils/
 │   └── commandParser.ts # Command parsing, validation, auto-completion
@@ -195,7 +202,8 @@ src/
 │   ├── personal.json
 │   ├── projects.json
 │   ├── achievements.json
-│   └── contact.json
+│   ├── contact.json
+│   └── docs/           # Markdown source documents for RAG
 ├── hooks/
 │   └── useTerminal.ts  # Terminal state management
 ├── App.tsx             # Main app with React Router routes
