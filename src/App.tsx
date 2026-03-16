@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-black overflow-x-hidden">
         <Navbar />
         <Routes>
           <Route

@@ -29,20 +29,20 @@ export const Projects: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 p-6">
+    <div className="min-h-screen bg-black text-gray-300 p-4 sm:p-6 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-green-400">Projects</h1>
-          <p className="text-gray-400 mt-2">A selection of my recent work</p>
+        <header className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-4xl font-bold text-green-400">Projects</h1>
+          <p className="text-gray-400 mt-2 text-sm sm:text-base">A selection of my recent work</p>
         </header>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-gray-900 border border-green-800 rounded-lg overflow-hidden hover:border-green-600 transition-colors"
+              className="bg-gray-900 border border-green-800 rounded-lg overflow-hidden hover:border-green-600 transition-colors flex flex-col"
             >
-              <div className="h-48 bg-gray-800 relative">
+              <div className="h-40 sm:h-48 bg-gray-800 relative flex-shrink-0">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -58,11 +58,11 @@ export const Projects: React.FC = () => {
                 )}
               </div>
 
-              <div className="p-4">
-                <h2 className="text-xl font-semibold text-green-300 mb-2">{project.title}</h2>
-                <p className="text-gray-400 text-sm mb-4">{project.shortDescription}</p>
+              <div className="p-3 sm:p-4 flex-1 flex flex-col">
+                <h2 className="text-lg sm:text-xl font-semibold text-green-300 mb-2">{project.title}</h2>
+                <p className="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 flex-1">{project.shortDescription}</p>
 
-                <div className="mb-4">
+                <div className="mb-3 sm:mb-4">
                   <div className="flex flex-wrap gap-1 mb-2">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
@@ -80,12 +80,12 @@ export const Projects: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-auto">
                   <a
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-green-400 hover:text-green-300 text-sm underline"
+                    className="text-green-400 hover:text-green-300 text-xs sm:text-sm underline"
                   >
                     GitHub
                   </a>
@@ -94,7 +94,7 @@ export const Projects: React.FC = () => {
                       href={project.links.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-green-400 hover:text-green-300 text-sm underline"
+                      className="text-green-400 hover:text-green-300 text-xs sm:text-sm underline"
                     >
                       Live Demo
                     </a>
@@ -104,7 +104,7 @@ export const Projects: React.FC = () => {
                       href={project.links.documentation}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-green-400 hover:text-green-300 text-sm underline"
+                      className="text-green-400 hover:text-green-300 text-xs sm:text-sm underline"
                     >
                       Docs
                     </a>

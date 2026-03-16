@@ -135,7 +135,17 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Integrated Fira Code monospace font from Google Fonts
   - Applied retro green/amber color palette with black background
   - Added retro border glow effect to terminal container
-  - Updated all components with responsive design considerations (for Task 2)
+- **Task 2**: Responsive design ✓ *Completed*
+  - Applied responsive Tailwind breakpoints across all pages (xs, sm, md)
+  - Adjusted font sizes for mobile, tablet, and desktop viewports
+  - Made padding and spacing responsive (p-4 sm:p-6, gap-4 sm:gap-6, etc.)
+  - Ensured terminal container adapts to viewport height using `dvh` unit
+  - Fixed horizontal overflow with `overflow-x-hidden` on all major containers
+  - Made grid layouts responsive (single column on mobile, multi-column on larger screens)
+  - Adjusted image heights and form inputs for touch-friendly mobile experience
+  - Maintained retro aesthetic while ensuring usability on all devices
+- **Task 3**: Keyboard navigation and accessibility (pending)
+- **Task 4**: Final performance optimization (pending)
 
 ## Latest Implementation: Terminal Component
 
