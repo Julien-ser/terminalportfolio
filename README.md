@@ -34,26 +34,33 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
      ```
      VITE_OPENAI_API_KEY=sk-your-actual-openai-api-key-here
      ```
-   - **Note:** The OpenAI API key is required for the RAG chatbot feature. Get one at [platform.openai.com](https://platform.openai.com).
+   - **Note:** The OpenAI API key is required for the RAG chatbot and document ingestion. Get one at [platform.openai.com](https://platform.openai.com).
 
-3. **Start development server:**
+3. **Generate embeddings for RAG (one-time or when content changes):**
+   ```bash
+   npm run ingest
+   ```
+   This processes the markdown documents in `src/data/docs/`, chunks them, generates embeddings using OpenAI's `text-embedding-ada-002`, and creates `src/data/embeddings.json`. The embeddings are used by the chatbot to answer questions based on your portfolio content.
+
+4. **Start development server:**
    ```bash
    npm run dev
    ```
 
-4. **Build for production:**
+5. **Build for production:**
    ```bash
    npm run build
    ```
 
-5. **Preview production build:**
+6. **Preview production build:**
    ```bash
    npm run preview
    ```
 
-6. **Production Environment Variables:**
+7. **Production Environment Variables:**
    - For Vercel deployment, set `VITE_OPENAI_API_KEY` in Vercel project settings (Environment Variables section).
    - GitHub Actions will automatically use these during build.
+   - **Important:** The ingest step (`npm run ingest`) should be run locally before committing the `embeddings.json` file, or you can add it as a pre-build step in CI/CD.
 
 ## Current Progress
 
@@ -93,7 +100,11 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Streaming response handler with callbacks for real-time output
   - Environment variable management via `.env.local` with `VITE_OPENAI_API_KEY`
   - Includes fallback non-streaming `chat()` function
-- **Task 2**: Document ingestion pipeline (Pending)
+- **Task 2**: Document ingestion pipeline ✓
+   - Created `src/data/docs/` with markdown versions of portfolio content (about.md, projects.md, achievements.md, contact.md)
+   - Implemented `embeddingService.ts` with chunking and embedding functions
+   - Created `scripts/ingest.js` that generates `embeddings.json`
+   - Added `npm run ingest` script and updated README
 - **Task 3**: Vector database setup (Pending)
 - **Task 4**: RAG chatbot in terminal (Pending)
 
