@@ -20,3 +20,124 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Focus styles for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid #4ade80;
+  outline-offset: 2px;
+}
+
+/* Skip link should be visible when focused */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only:not(.focus\:not-sr-only):focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* High contrast mode */
+.high-contrast {
+  --tw-text-opacity: 1 !important;
+  --tw-bg-opacity: 1 !important;
+}
+
+.high-contrast * {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.high-contrast .text-green-400 {
+  color: #00ff00 !important;
+}
+
+.high-contrast .text-green-300 {
+  color: #00dd00 !important;
+}
+
+.high-contrast .text-green-200 {
+  color: #00bb00 !important;
+}
+
+.high-contrast .text-green-100 {
+  color: #009900 !important;
+}
+
+.high-contrast .text-green-600 {
+  color: #008800 !important;
+}
+
+.high-contrast .bg-green-800 {
+  background-color: #006600 !important;
+}
+
+.high-contrast .bg-green-900 {
+  background-color: #004400 !important;
+}
+
+.high-contrast .bg-green-950 {
+  background-color: #002200 !important;
+}
+
+.high-contrast .bg-gray-900 {
+  background-color: #000000 !important;
+}
+
+.high-contrast .bg-gray-800 {
+  background-color: #111111 !important;
+}
+
+.high-contrast .border-green-800 {
+  border-color: #00aa00 !important;
+}
+
+.high-contrast .border-green-600 {
+  border-color: #00cc00 !important;
+}
+
+.high-contrast .text-red-400 {
+  color: #ff0000 !important;
+}
+
+.high-contrast .text-yellow-400 {
+  color: #ffff00 !important;
+}
+
+.high-contrast .text-gray-400 {
+  color: #cccccc !important;
+}
+
+.high-contrast .text-gray-300 {
+  color: #dddddd !important;
+}
+
+.high-contrast .text-gray-500 {
+  color: #aaaaaa !important;
+}
+
+.high-contrast .caret-white {
+  caret-color: #ffffff !important;
+}
+
+/* Ensure high contrast mode still has visible focus */
+.high-contrast *:focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px;
+}
+

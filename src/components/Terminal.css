@@ -124,3 +124,19 @@
     inset 0 0 5px rgba(34, 197, 94, 0.1);
   border: 1px solid rgba(34, 197, 94, 0.4);
 }
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .crt-overlay,
+  .scanline-flash,
+  .typing-animation,
+  .cursor-blink {
+    animation: none !important;
+  }
+
+  * {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

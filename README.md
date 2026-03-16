@@ -74,6 +74,41 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
    - GitHub Actions will automatically use these during build.
    - **Important:** The ingest step (`npm run ingest`) and `npm run create-index` should be run locally before committing the `embeddings.json` file, or you can add them as pre-build steps in CI/CD.
 
+## Performance Optimization
+
+This project implements several performance best practices to ensure fast load times and smooth user experience:
+
+### Implemented Optimizations
+
+- **Code Splitting**: Routes are lazy-loaded using `React.lazy()` and `Suspense`, reducing initial bundle size. Page components are only loaded when navigated to.
+- **Image Lazy Loading**: All images use `loading="lazy"` attribute to defer offscreen images, improving initial page load.
+- **Preconnect Hints**: `index.html` includes `preconnect` and `dns-prefetch` for Google Fonts to reduce connection latency.
+- **Build Optimization**:
+  - Deterministic chunk filenames with content hashes for long-term caching
+  - Minification via esbuild (CSS and JS)
+  - Gzip compression computed during build
+  - Pre-bundling of dependencies for faster冷启动
+- **Responsive Images**: Images are sized appropriately with Tailwind CSS responsive classes.
+- **Font Display Swap**: Google Fonts uses `display=swap` for non-blocking font rendering.
+
+### Lighthouse Scores
+
+Audit the site using Chrome DevTools Lighthouse:
+1. Open the site in Chrome
+2. Open DevTools (F12) → Lighthouse tab
+3. Select all categories (Performance, Accessibility, Best Practices, SEO)
+4. Click "Analyze" (or use "Start" in newer versions)
+5. Expected scores: **>90** for all categories
+
+### Manual Performance Testing
+
+- Run production build locally: `npm run build && npm run preview`
+- Use Chrome DevTools Network tab to verify:
+  - Assets are gzipped
+  - Images lazy load when scrolling
+  - Bundle sizes are reasonable (main bundle ~230KB gzipped)
+  - No render-blocking resources
+
 ## Current Progress
 
 ### Phase 1: Planning & Setup ✓

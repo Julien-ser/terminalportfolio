@@ -23,8 +23,10 @@ export const Terminal: React.FC = () => {
     updateEntry,
   } = terminal;
 
-  // Ensure store is initialized
-  usePortfolioStore();
+  // Ensure input is focused on mount and when mode changes
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [mode]);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -66,6 +68,22 @@ export const Terminal: React.FC = () => {
       e.preventDefault();
       const suggestion = suggestions[selectedSuggestion];
       setInput(suggestion + ' ');
+      setShowSuggestions(false);
+      inputRef.current?.focus();
+    }
+  };
+
+  const handleArrowKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedSuggestion(prev => (prev + 1) % suggestions.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedSuggestion(prev => (prev - 1 + suggestions.length) % suggestions.length);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
       setShowSuggestions(false);
     }
   };
@@ -233,10 +251,27 @@ export const Terminal: React.FC = () => {
 Type 'help' to see available commands.
 `;
 
+  // Create an announcement ID for screen readers
+  const [announcementId] = useState(() => `terminal-announce-${Math.random().toString(36).substr(2, 9)}`);
+
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono p-2 sm:p-4 overflow-x-hidden"
-          onClick={() => inputRef.current?.focus()}
-          data-testid="terminal">
+    <div
+      className="min-h-screen bg-black text-green-400 font-mono p-2 sm:p-4 overflow-x-hidden"
+      onClick={() => inputRef.current?.focus()}
+      data-testid="terminal"
+      role="dialog"
+      aria-label="Terminal portfolio interface"
+      aria-describedby={announcementId}
+    >
+      {/* Screen reader live region for announcements */}
+      <div
+        id={announcementId}
+        className="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      />
+
       <div className="max-w-full sm:max-w-4xl mx-auto h-[calc(100dvh-1rem)] sm:h-[calc(100vh-4rem)] flex flex-col relative retro-border rounded-lg">
         {/* CRT Scanline overlay */}
         <div className="crt-overlay" />
@@ -276,33 +311,42 @@ Type 'help' to see available commands.
               onKeyDown={(e) => {
                 handleKeyDown(e);
                 handleTabKey(e);
+                handleArrowKey(e);
               }}
               className="flex-1 bg-transparent outline-none ml-2 text-green-400 caret-white font-mono text-glow text-xs sm:text-sm md:text-base"
               placeholder="Type a command..."
               aria-label="Terminal command input"
+              aria-autocomplete="list"
+              aria-controls="suggestions-list"
+              aria-activedescendant={showSuggestions && suggestions.length > 0 ? `suggestion-${selectedSuggestion}` : undefined}
+              aria-expanded={showSuggestions}
               autoComplete="off"
               spellCheck={false}
               data-testid="terminal-input"
+              autoFocus
             />
           </div>
 
           {showSuggestions && suggestions.length > 0 && (
-            <div 
+            <div
               className="absolute bottom-full left-0 right-0 bg-gray-900 border border-green-800 rounded-b-md overflow-hidden mb-1 sm:mb-2 shadow-lg shadow-green-900/50 max-h-40 sm:max-h-48 overflow-y-auto"
               role="listbox"
+              id="suggestions-list"
+              aria-label="Command suggestions"
               data-testid="suggestions-dropdown"
             >
               {suggestions.map((suggestion, index) => (
                 <div
                   key={suggestion}
                   className={`px-2 sm:px-3 py-2 sm:py-2.5 cursor-pointer transition-colors duration-150 ${
-                    index === selectedSuggestion 
-                      ? 'bg-green-900 text-white border-l-2 border-green-400' 
+                    index === selectedSuggestion
+                      ? 'bg-green-900 text-white border-l-2 border-green-400'
                       : 'text-green-300 hover:bg-gray-800'
                   }`}
                   onClick={() => handleSuggestionClick(suggestion)}
                   role="option"
                   aria-selected={index === selectedSuggestion}
+                  id={`suggestion-${index}`}
                 >
                   <span className="font-mono text-xs sm:text-sm">{suggestion}</span>
                 </div>
