@@ -20,25 +20,40 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
 
 ## Setup
 
-1. Install dependencies:
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Start development server:
+2. **Configure environment variables:**
+   - Copy `.env.example` to `.env.local`:
+     ```bash
+     cp .env.example .env.local
+     ```
+   - Edit `.env.local` and add your OpenAI API key:
+     ```
+     VITE_OPENAI_API_KEY=sk-your-actual-openai-api-key-here
+     ```
+   - **Note:** The OpenAI API key is required for the RAG chatbot feature. Get one at [platform.openai.com](https://platform.openai.com).
+
+3. **Start development server:**
    ```bash
    npm run dev
    ```
 
-3. Build for production:
+4. **Build for production:**
    ```bash
    npm run build
    ```
 
-4. Preview production build:
+5. **Preview production build:**
    ```bash
    npm run preview
    ```
+
+6. **Production Environment Variables:**
+   - For Vercel deployment, set `VITE_OPENAI_API_KEY` in Vercel project settings (Environment Variables section).
+   - GitHub Actions will automatically use these during build.
 
 ## Current Progress
 
@@ -48,7 +63,7 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
 - **Task 3**: Wireframes and terminal command specification documented in `docs/`
 - **Task 4**: CI/CD pipeline configured with GitHub Actions and Vercel integration
 
-### Phase 2: Core Infrastructure (In Progress)
+### Phase 2: Core Infrastructure ✓
 - **Task 1**: Terminal UI component ✓
   - Built `Terminal.tsx` with Tailwind CSS styling
   - Implemented `useTerminal` hook for state management
@@ -70,6 +85,19 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
   - Terminal component accesses store data for commands
   - Added loading states and error handling throughout
   - Store initialized on app mount with `fetchData()` function
+
+### Phase 3: RAG Implementation (In Progress)
+- **Task 1**: LLM service integration ✓
+  - Created `src/services/llmService.ts` with `streamChat()` function
+  - Supports GPT-4-turbo and GPT-3.5-turbo models
+  - Streaming response handler with callbacks for real-time output
+  - Environment variable management via `.env.local` with `VITE_OPENAI_API_KEY`
+  - Includes fallback non-streaming `chat()` function
+- **Task 2**: Document ingestion pipeline (Pending)
+- **Task 3**: Vector database setup (Pending)
+- **Task 4**: RAG chatbot in terminal (Pending)
+
+### Phase 4: UI/UX Polish & Deployment (Pending)
 
 ## Latest Implementation: Terminal Component
 
