@@ -45,7 +45,37 @@ Aesthetic portfolio website with a terminal interface, featuring projects, achie
 - **Phase 1 Task 1**: Project setup and tech stack configuration ✓
 - **Phase 1 Task 2**: Data model and sample JSON files ✓
 - **Phase 1 Task 3**: Wireframes and command documentation ✓
-- **Phase 1 Task 4**: CI/CD pipeline configuration (pending)
+- **Phase 1 Task 4**: CI/CD pipeline configuration ✓
+
+## Deployment
+
+This project is configured for automatic deployment to Vercel via GitHub Actions.
+
+### Setting up Vercel
+
+1. **Import project to Vercel**
+   - Go to [vercel.com](https://vercel.com) and sign in
+   - Click "New Project" and import your GitHub repository
+   - Vercel will automatically detect the Vite framework and configure build settings
+
+2. **Configure GitHub Secrets**
+   - In your GitHub repository, go to Settings → Secrets and variables → Actions
+   - Add the following repository secrets:
+     - `VERCEL_TOKEN`: Your Vercel API token (create at https://vercel.com/account/tokens)
+     - `VERCEL_ORG_ID`: Your Vercel organization ID (found in Vercel dashboard)
+     - `VERCEL_PROJECT_ID`: Your Vercel project ID (found in project settings)
+
+3. **Automatic Deployments**
+   - Push to `main` branch: Deploys to production
+   - Create PR to `main`: Creates preview deployment with URL commented on PR
+
+### Manual Deployment
+
+You can also manually trigger deployments using:
+```bash
+npm run build
+vercel --prod
+```
 
 ### Task 3 Deliverables Completed
 
