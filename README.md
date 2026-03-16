@@ -1,29 +1,62 @@
-# Project Template
+# Terminal Portfolio
 
-This is a template for new projects created via `wiggum_master.sh create`.
+Aesthetic portfolio website with a terminal interface, featuring projects, achievements, and a RAG-powered chatbot for interview questions.
 
-Each project:
-- Lives in `projects/<project-name>/`
-- Has its own GitHub repository
-- Runs its own autonomous OpenCode agent loop
-- Tracks progress in TASKS.md
+## Tech Stack
+
+- **React 18** + **Vite** - Fast build tool with instant hot reload and optimal development experience
+- **TypeScript** - Type safety and better developer experience
+- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
+- **React Router v6** - Declarative routing for single-page applications
+- **Vercel** - Zero-config deployment platform with preview deployments
+
+### Why this stack?
+
+- **Vite** provides lightning-fast development server and optimized production builds
+- **TypeScript** catches errors at compile time and improves code maintainability
+- **Tailwind CSS** allows building custom designs without leaving HTML/JSX
+- **React Router** is the standard for React routing with excellent TypeScript support
+- **Vercel** offers seamless CI/CD integration and automatic preview deployments
 
 ## Setup
 
-1. Create: `bash wiggum_master.sh create "my-project" "Description"`
-2. View: `cat projects/my-project/README.md`
-3. Initialize: `cd projects/my-project && opencode /init --yes`
-4. Run: `cd projects/my-project && bash wiggum.sh`
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Files
+2. Start development server:
+   ```bash
+   npm run dev
+   ```
 
-- **README.md** - Project documentation
-- **TASKS.md** - Development task list
-- **prompt.txt** - Agent instructions (project-specific)
-- **AGENTS.md** - Project context (auto-generated)
-- **src/** - Source code directory
-- **tests/** - Test files
+3. Build for production:
+   ```bash
+   npm run build
+   ```
 
-## Customization
+4. Preview production build:
+   ```bash
+   npm run preview
+   ```
 
-Update TASKS.md with your project goals, then let the agent handle it!
+## Current Progress
+
+- Phase 1 Task 1: Project setup and tech stack configuration (complete)
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Page components
+├── services/      # API and business logic
+├── store/         # Zustand state management
+├── utils/         # Helper functions
+├── data/          # JSON data files
+└── hooks/         # Custom React hooks
+```
+
+## License
+
+MIT
