@@ -10,7 +10,7 @@
 ## Phase 2: Core Infrastructure
 - [x] **Task 1:** Build Terminal UI component: input line with prompt, command history output, and auto-completion for commands using Tailwind CSS. Implement command parser with validation. *Deliverable:* `src/components/Terminal.tsx`, `src/hooks/useTerminal.ts`, and `src/utils/commandParser.ts`.
 - [x] **Task 2:** Implement client-side routing with React Router v6 for static pages and ensure terminal stays on `/` route. Create layout with navigation bar linking to pages (except terminal). *Deliverable:* `src/App.tsx` with routes, `src/components/Navbar.tsx`.
-- [ ] **Task 3:** Develop Content Pages: About (personal bio + skills), Projects (grid with cards, tags, links), Achievements (timeline/list), Contact (email form/links). Use data from JSON. *Deliverable:* `src/pages/About.tsx`, `Projects.tsx`, `Achievements.tsx`, `Contact.tsx`.
+- [x] **Task 3:** Develop Content Pages: About (personal bio + skills), Projects (grid with cards, tags, links), Achievements (timeline/list), Contact (email form/links). Use data from JSON. *Deliverable:* `src/pages/About.tsx`, `Projects.tsx`, `Achievements.tsx`, `Contact.tsx`.
 - [ ] **Task 4:** Set up global state with Zustand to load portfolio data once and share across pages and terminal. Add loading states and error handling. *Deliverable:* `src/store/usePortfolioStore.ts`, updated pages/terminal consuming store.
 
 ## Phase 3: RAG Implementation
